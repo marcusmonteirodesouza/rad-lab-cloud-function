@@ -7,6 +7,9 @@ functions.http('launchRadLab', async (req, res) => {
   const { module } = req.body;
 
   switch (module) {
+    case 'alpha-fold':
+      await launchAlphaFold(pubsub);
+      return res.status(201).json({});
     case 'data-science':
       await launchDataScience(pubsub);
       return res.status(201).json({});
@@ -14,6 +17,16 @@ functions.http('launchRadLab', async (req, res) => {
       return res.status(400).json(`Not implemented for module ${module}`);
   }
 });
+
+/**
+ * Launches a RAD Lab alpha_fold module
+ * @param {PubSub} pubsub
+ */
+async function launchAlphaFold(pubsub) {
+  const topic = pubsub.topic('rad-lab-launch-alpha-fold');
+  const data = Buffer.from(JSON.stringify({}));
+  await topic.publishMessage({ data });
+}
 
 /**
  * Launches a RAD Lab data_science module
