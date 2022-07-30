@@ -13,6 +13,15 @@ functions.http('launchRadLab', async (req, res) => {
     case 'data-science':
       await launchDataScience(pubsub);
       return res.status(201).json({});
+    case 'genomics-cromwell':
+      await launchGenomicsCromwell(pubsub);
+      return res.status(201).json({});
+    case 'genomics-dsub':
+      await launchGenomicsDSub(pubsub);
+      return res.status(201).json({});
+    case 'silicon-design':
+      await launchSiliconDesign(pubsub);
+      return res.status(201).json({});
     default:
       return res.status(400).json(`Not implemented for module ${module}`);
   }
@@ -34,6 +43,36 @@ async function launchAlphaFold(pubsub) {
  */
 async function launchDataScience(pubsub) {
   const topic = pubsub.topic('rad-lab-launch-data-science');
+  const data = Buffer.from(JSON.stringify({}));
+  await topic.publishMessage({ data });
+}
+
+/**
+ * Launches a RAD Lab genomics_cromwell module
+ * @param {PubSub} pubsub
+ */
+async function launchGenomicsCromwell(pubsub) {
+  const topic = pubsub.topic('rad-lab-launch-genomics-cromwell');
+  const data = Buffer.from(JSON.stringify({}));
+  await topic.publishMessage({ data });
+}
+
+/**
+ * Launches a RAD Lab genomics_dsub module
+ * @param {PubSub} pubsub
+ */
+async function launchGenomicsDSub(pubsub) {
+  const topic = pubsub.topic('rad-lab-launch-genomics-dsub');
+  const data = Buffer.from(JSON.stringify({}));
+  await topic.publishMessage({ data });
+}
+
+/**
+ * Launches a RAD Lab silicon_design module
+ * @param {PubSub} pubsub
+ */
+async function launchSiliconDesign(pubsub) {
+  const topic = pubsub.topic('rad-lab-launch-silicon-design');
   const data = Buffer.from(JSON.stringify({}));
   await topic.publishMessage({ data });
 }
