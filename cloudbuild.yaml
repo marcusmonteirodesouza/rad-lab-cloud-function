@@ -1,0 +1,3 @@
+steps:
+  - name: "google/cloud-sdk"
+    args: ["gcloud", "beta", "functions", "deploy", "nodejs-http-function", "--gen2", "--runtime", "nodejs16", "--trigger-http", "--entry-point", "launchRadLab", "--source", ".", "--allow-unauthenticate", "--region", "_REGION"]
