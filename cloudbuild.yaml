@@ -15,7 +15,6 @@ steps:
         'launchRadLab',
         '--source',
         '.',
-        '--allow-unauthenticated',
         '--region',
         '${_REGION}',
       ]
