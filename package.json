@@ -4,7 +4,11 @@
   "description": "A Google Cloud Functio RAD Lab modules.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js",
+    "fix": "eslint . --ext .js --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,17 @@
   "dependencies": {
     "@google-cloud/functions-framework": "^3.1.2",
     "@google-cloud/pubsub": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{json,md,yaml}": "prettier --write"
   }
 }
