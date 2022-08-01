@@ -1,7 +1,7 @@
 {
-  "name": "rad-lab-launcher-cloud-function",
+  "name": "rad-lab-notify-cloud-function",
   "version": "1.0.0",
-  "description": "A Google Cloud Functio RAD Lab modules.",
+  "description": "A Google Cloud Function that launches RAD Lab modules by request.",
   "main": "index.js",
   "scripts": {
     "format": "prettier --write .",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marcusmonteirodesouza/rad-lab-cloud-function.git"
+    "url": "git+https://github.com/marcusmonteirodesouza/rad-lab-launcher-cloud-function.git"
   },
   "keywords": [],
   "author": "Marcus Vinicius Monteiro de Souza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/marcusmonteirodesouza/rad-lab-cloud-function/issues"
+    "url": "https://github.com/marcusmonteirodesouza/rad-lab-launcher-cloud-function/issues"
   },
-  "homepage": "https://github.com/marcusmonteirodesouza/rad-lab-cloud-function#readme",
+  "homepage": "https://github.com/marcusmonteirodesouza/rad-lab-launcher-cloud-function#readme",
   "dependencies": {
     "@google-cloud/firestore": "^5.0.2",
     "@google-cloud/functions-framework": "^3.1.2",
