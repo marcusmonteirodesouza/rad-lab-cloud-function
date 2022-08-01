@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/marcusmonteirodesouza/rad-lab-cloud-function#readme",
   "dependencies": {
+    "@google-cloud/firestore": "^5.0.2",
     "@google-cloud/functions-framework": "^3.1.2",
     "@google-cloud/pubsub": "^3.1.0",
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "joi": "^17.6.0"
   },
   "devDependencies": {
     "eslint": "^8.20.0",
