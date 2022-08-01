@@ -6,7 +6,7 @@ steps:
         'beta',
         'functions',
         'deploy',
-        'nodejs-http-function',
+        'launch-rad-lab',
         '--gen2',
         '--runtime',
         'nodejs16',

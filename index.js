@@ -1,6 +1,6 @@
 const functions = require('@google-cloud/functions-framework');
 const { PubSub } = require('@google-cloud/pubsub');
-const { Firestore } = require('@google-cloud/firestore');
+const { Firestore, FieldValue } = require('@google-cloud/firestore');
 const Joi = require('joi');
 
 functions.http('launchRadLab', async (req, res) => {
@@ -28,7 +28,11 @@ functions.http('launchRadLab', async (req, res) => {
 
   const firestore = new Firestore();
   const radLabRequestsCollection = firestore.collection('rad-lab-requests');
-  const requestId = await radLabRequestsCollection.add(requestBody);
+  const documentReference = await radLabRequestsCollection.add({
+    ...requestBody,
+    requestedAt: FieldValue.serverTimestamp(),
+  });
+  const requestId = documentReference.id;
 
   const pubsub = new PubSub();
 
