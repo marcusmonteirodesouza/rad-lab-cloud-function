@@ -3,7 +3,7 @@ const { PubSub } = require('@google-cloud/pubsub');
 const { Firestore } = require('@google-cloud/firestore');
 const Joi = require('joi');
 
-functions.http('launchRadLab', async (req, res) => {
+functions.http('launchScienceModule', async (req, res) => {
   const requestBodySchema = Joi.object().keys({
     module: Joi.string()
       .valid(
@@ -11,7 +11,8 @@ functions.http('launchRadLab', async (req, res) => {
         'data-science',
         'genomics-cromwell',
         'genomics-dsub',
-        'silicon-design'
+        'silicon-design',
+        'hpc-cluster-small'
       )
       .required(),
     requester: Joi.object()
@@ -27,7 +28,9 @@ functions.http('launchRadLab', async (req, res) => {
   }
 
   const firestore = new Firestore();
-  const radLabRequestsCollection = firestore.collection('rad-lab-requests');
+  const radLabRequestsCollection = firestore.collection(
+    'science-module-requests'
+  );
   const documentReference = await radLabRequestsCollection.add(requestBody);
   const requestId = documentReference.id;
 
@@ -49,6 +52,9 @@ functions.http('launchRadLab', async (req, res) => {
     case 'silicon-design':
       await launchSiliconDesign(pubsub, requestId);
       break;
+    case 'hpc-cluster-small':
+      await launchHPCClusterSmall(pubsub, requestId);
+      break;
     default:
       return res
         .status(400)
@@ -64,7 +70,7 @@ functions.http('launchRadLab', async (req, res) => {
  * @param {string} requestId
  */
 async function launchAlphaFold(pubsub, requestId) {
-  const topic = pubsub.topic('rad-lab-launch-alpha-fold');
+  const topic = pubsub.topic('launch-alpha-fold');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -75,7 +81,7 @@ async function launchAlphaFold(pubsub, requestId) {
  * @param {string} requestId
  */
 async function launchDataScience(pubsub, requestId) {
-  const topic = pubsub.topic('rad-lab-launch-data-science');
+  const topic = pubsub.topic('launch-data-science');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -86,7 +92,7 @@ async function launchDataScience(pubsub, requestId) {
  * @param {string} requestId
  */
 async function launchGenomicsCromwell(pubsub, requestId) {
-  const topic = pubsub.topic('rad-lab-launch-genomics-cromwell');
+  const topic = pubsub.topic('launch-genomics-cromwell');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -97,7 +103,7 @@ async function launchGenomicsCromwell(pubsub, requestId) {
  * @param {string} requestId
  */
 async function launchGenomicsDSub(pubsub, requestId) {
-  const topic = pubsub.topic('rad-lab-launch-genomics-dsub');
+  const topic = pubsub.topic('launch-genomics-dsub');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -108,7 +114,18 @@ async function launchGenomicsDSub(pubsub, requestId) {
  * @param {string} requestId
  */
 async function launchSiliconDesign(pubsub, requestId) {
-  const topic = pubsub.topic('rad-lab-launch-silicon-design');
+  const topic = pubsub.topic('launch-silicon-design');
+  const data = Buffer.from(JSON.stringify({ requestId }));
+  await topic.publishMessage({ data });
+}
+
+/**
+ * Launches a HPC Toolkit hpc-small-cluster module
+ * @param {PubSub} pubsub
+ * @param {string} requestId
+ */
+async function launchHPCClusterSmall(pubsub, requestId) {
+  const topic = pubsub.topic('launch-hpc-cluster-small');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
