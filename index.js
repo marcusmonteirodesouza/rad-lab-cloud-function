@@ -7,12 +7,12 @@ functions.http('launchScienceModule', async (req, res) => {
   const requestBodySchema = Joi.object().keys({
     module: Joi.string()
       .valid(
-        'alpha-fold',
-        'data-science',
-        'genomics-cromwell',
-        'genomics-dsub',
-        'silicon-design',
-        'hpc-cluster-small'
+        'rad-lab-alpha-fold',
+        'rad-lab-data-science',
+        'rad-lab-genomics-cromwell',
+        'rad-lab-genomics-dsub',
+        'rad-lab-silicon-design',
+        'hpc-toolkit-hpc-cluster-small'
       )
       .required(),
     requester: Joi.object()
@@ -29,7 +29,7 @@ functions.http('launchScienceModule', async (req, res) => {
 
   const firestore = new Firestore();
   const radLabRequestsCollection = firestore.collection(
-    'science-module-requests'
+    'science-comp-launch-requests'
   );
   const documentReference = await radLabRequestsCollection.add(requestBody);
   const requestId = documentReference.id;
@@ -37,23 +37,23 @@ functions.http('launchScienceModule', async (req, res) => {
   const pubsub = new PubSub();
 
   switch (requestBody.module) {
-    case 'alpha-fold':
-      await launchAlphaFold(pubsub, requestId);
+    case 'rad-lab-alpha-fold':
+      await launchRadLabAlphaFold(pubsub, requestId);
       break;
-    case 'data-science':
-      await launchDataScience(pubsub, requestId);
+    case 'rad-lab-data-science':
+      await launchRadLabDataScience(pubsub, requestId);
       break;
-    case 'genomics-cromwell':
-      await launchGenomicsCromwell(pubsub, requestId);
+    case 'rad-lab-genomics-cromwell':
+      await launchRadLabGenomicsCromwell(pubsub, requestId);
       break;
-    case 'genomics-dsub':
-      await launchGenomicsDSub(pubsub, requestId);
+    case 'rad-lab-genomics-dsub':
+      await launchRadLabGenomicsDSub(pubsub, requestId);
       break;
-    case 'silicon-design':
-      await launchSiliconDesign(pubsub, requestId);
+    case 'rad-lab-silicon-design':
+      await launchRadLabSiliconDesign(pubsub, requestId);
       break;
-    case 'hpc-cluster-small':
-      await launchHPCClusterSmall(pubsub, requestId);
+    case 'hpc-toolkit-hpc-cluster-small':
+      await launchHpcToolkitHpcClusterSmall(pubsub, requestId);
       break;
     default:
       return res
@@ -69,8 +69,8 @@ functions.http('launchScienceModule', async (req, res) => {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchAlphaFold(pubsub, requestId) {
-  const topic = pubsub.topic('launch-alpha-fold');
+async function launchRadLabAlphaFold(pubsub, requestId) {
+  const topic = pubsub.topic('launch-rad-lab-alpha-fold');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -80,8 +80,8 @@ async function launchAlphaFold(pubsub, requestId) {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchDataScience(pubsub, requestId) {
-  const topic = pubsub.topic('launch-data-science');
+async function launchRadLabDataScience(pubsub, requestId) {
+  const topic = pubsub.topic('launch-rad-lab-data-science');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -91,8 +91,8 @@ async function launchDataScience(pubsub, requestId) {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchGenomicsCromwell(pubsub, requestId) {
-  const topic = pubsub.topic('launch-genomics-cromwell');
+async function launchRadLabGenomicsCromwell(pubsub, requestId) {
+  const topic = pubsub.topic('launch-rad-lab-genomics-cromwell');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -102,8 +102,8 @@ async function launchGenomicsCromwell(pubsub, requestId) {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchGenomicsDSub(pubsub, requestId) {
-  const topic = pubsub.topic('launch-genomics-dsub');
+async function launchRadLabGenomicsDSub(pubsub, requestId) {
+  const topic = pubsub.topic('launch-rad-lab-genomics-dsub');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -113,8 +113,8 @@ async function launchGenomicsDSub(pubsub, requestId) {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchSiliconDesign(pubsub, requestId) {
-  const topic = pubsub.topic('launch-silicon-design');
+async function launchRadLabSiliconDesign(pubsub, requestId) {
+  const topic = pubsub.topic('launch-rad-lab-silicon-design');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
@@ -124,8 +124,8 @@ async function launchSiliconDesign(pubsub, requestId) {
  * @param {PubSub} pubsub
  * @param {string} requestId
  */
-async function launchHPCClusterSmall(pubsub, requestId) {
-  const topic = pubsub.topic('launch-hpc-cluster-small');
+async function launchHpcToolkitHpcClusterSmall(pubsub, requestId) {
+  const topic = pubsub.topic('launch-hpc-toolkit-hpc-cluster-small');
   const data = Buffer.from(JSON.stringify({ requestId }));
   await topic.publishMessage({ data });
 }
