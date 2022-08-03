@@ -1,7 +1,7 @@
 {
-  "name": "rad-lab-notify-cloud-function",
+  "name": "science-comp-launcher-cloud-function",
   "version": "1.0.0",
-  "description": "A Google Cloud Function that launches RAD Lab modules by request.",
+  "description": "A Google Cloud Function that launches Science Comp modules.",
   "main": "index.js",
   "scripts": {
     "format": "prettier --write .",

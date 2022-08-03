@@ -3,7 +3,7 @@ const { PubSub } = require('@google-cloud/pubsub');
 const { Firestore } = require('@google-cloud/firestore');
 const Joi = require('joi');
 
-functions.http('launchScienceModule', async (req, res) => {
+functions.http('launchScienceCompModule', async (req, res) => {
   const requestBodySchema = Joi.object().keys({
     module: Joi.string()
       .valid(
