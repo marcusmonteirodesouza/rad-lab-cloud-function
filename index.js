@@ -28,11 +28,12 @@ functions.http('launchScienceCompModule', async (req, res) => {
   }
 
   const firestore = new Firestore();
-  const radLabRequestsCollection = firestore.collection(
-    'science-comp-launch-requests'
+  const scienceCompRequestsCollection = firestore.collection(
+    'science-comp-requests'
   );
-  const documentReference = await radLabRequestsCollection.add(requestBody);
-  const requestId = documentReference.id;
+  const uniqueId = scienceCompRequestsCollection.doc().id;
+  const requestId = uniqueId.toLowerCase(); // Because this id is going to be used to deploy resources on GCP that need to be lowercased.
+  await scienceCompRequestsCollection.doc(requestId).set(requestBody);
 
   const pubsub = new PubSub();
 
